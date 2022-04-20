@@ -57,8 +57,9 @@ void main() {
     print("What do you want to do?\n");
     print("Press 0 to exit this menu.");
     print("Press 1 to add.");
-    print("Press 2 to display all items");
-    print("Press 3 if you are done.");
+    print("Press 2 to display all items.");
+    print("Press 3 to remove items.");
+    print("Press 4 if you are done.");
     code = stdin.readLineSync();
 
     if (code == "0") {
@@ -75,8 +76,8 @@ void main() {
       desc = checkValue(desc, "Item desc/name: ", 2);
       price = double.parse(checkValue(price, "Item price: ", 3));
       quantity = int.parse(checkValue(quantity, "Item quantity: ", 4));
-      discount = int.parse(
-          checkValue(discount, "Item discount in percentage(%):", code));
+      discount =
+          int.parse(checkValue(discount, "Item discount in percentage(%):", 5));
 
       products.add(Item(id, desc, price, quantity, discount));
       print("Item added!\n");
@@ -84,11 +85,26 @@ void main() {
       products.forEach((element) {
         element.read();
       });
+      // Amirul
     } else if (code == "3") {
+      products.forEach((element) {
+        element.read();
+      });
+
+      print("\nInput Id of item that you want to remove...\n");
+      var id;
+
+      id = int.parse(checkValue(id, "Item id: ", 1));
+      products.removeWhere((item) => item.id == id);
+      print("\nItem Removed!");
+    } else if (code == "4") {
       rows.add(Storage(counter, products));
       products = [];
       counter++;
+      print("====================\n");
+      print("Next customer!");
     }
+    ;
   } while (flag);
   for (int i = 1; i < counter; i++) {
     print("Customer #$i items are:\n");
