@@ -47,6 +47,7 @@ void main() {
     print("Press 0 to exit");
     print("Press 1 to add.");
     print("Press 2 to display all items");
+    print("Press 3 to remove items");
     code = stdin.readLineSync();
 
     if (code == "0") {
@@ -63,8 +64,7 @@ void main() {
       id = int.parse(checkValue(id, "Item id: ", 1));
       desc = checkValue(desc, "Item desc/name: ", 2);
       price = double.parse(checkValue(price, "Item price: ", 3));
-      quantity =
-          int.parse(checkValue(quantity, "Item quantity: ", 4));
+      quantity = int.parse(checkValue(quantity, "Item quantity: ", 4));
 
       products.add(Item(id, desc, price, quantity));
       print("Item added!\n");
@@ -72,6 +72,20 @@ void main() {
       products.forEach((element) {
         element.read();
       });
+
+      // Amirul
+    } else if (code == "3") {
+      products.forEach((element) {
+        element.read();
+      });
+
+      print("\nInput Id of item that you want to remove...\n");
+      var id;
+
+      id = int.parse(checkValue(id, "Item id: ", 1));
+      products.removeWhere((item) => item.id == id);
+      print("\nItem Removed!");
     }
+    ;
   } while (flag);
 }
