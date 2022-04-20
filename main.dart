@@ -1,11 +1,12 @@
 import 'dart:io';
 
 class Item {
-  int id;
-  String desc;
-  double price;
-  int quantity;
-  Item(this.id, this.desc, this.price, this.quantity);
+  late int id;
+  late String desc;
+  late double price;
+  late int quantity;
+  late int discount;
+  Item(this.id, this.desc, this.price, this.quantity, this.discount);
 
   void read() {
     print("\n====================================");
@@ -13,6 +14,7 @@ class Item {
     print("Product description: ${this.desc}");
     print("Product price: ${this.price}");
     print("Product quantity: ${this.quantity}");
+    print("Product discount: ${this.discount}%");
     print("====================================\n");
   }
 }
@@ -24,7 +26,7 @@ String checkValue(var property, String prompt, int code) {
       checkFlag = true;
       stdout.write(prompt);
       property = stdin.readLineSync()!;
-      if (code == 1 || code == 4) //id or price
+      if (code == 1 || code == 4 || code == 5) //id or price or discount
         property = int.parse(property);
       else if (code == 2) //desc
         ;
@@ -38,15 +40,25 @@ String checkValue(var property, String prompt, int code) {
   return property.toString();
 }
 
-void main() {
+class Storage {
+  late int id;
   List<Item> products = [];
+  Storage(this.id, this.products);
+}
+
+void main() {
+  late List<Item> products = [];
+  late List<Storage> rows = [];
   var code;
+  int counter = 1;
   bool flag = true;
   do {
-    print("\nWhat do you want to do?\n");
-    print("Press 0 to exit");
+    print("\nWelcome, Customer #$counter!");
+    print("What do you want to do?\n");
+    print("Press 0 to exit this menu.");
     print("Press 1 to add.");
     print("Press 2 to display all items");
+    print("Press 3 if you are done.");
     code = stdin.readLineSync();
 
     if (code == "0") {
@@ -57,21 +69,31 @@ void main() {
     } else if (code == "1") {
       print("Insert item function...");
 
-      var id, price, quantity;
-      var desc;
+      var id, price, quantity, desc, discount;
 
       id = int.parse(checkValue(id, "Item id: ", 1));
       desc = checkValue(desc, "Item desc/name: ", 2);
       price = double.parse(checkValue(price, "Item price: ", 3));
-      quantity =
-          int.parse(checkValue(quantity, "Item quantity: ", 4));
+      quantity = int.parse(checkValue(quantity, "Item quantity: ", 4));
+      discount = int.parse(
+          checkValue(discount, "Item discount in percentage(%):", code));
 
-      products.add(Item(id, desc, price, quantity));
+      products.add(Item(id, desc, price, quantity, discount));
       print("Item added!\n");
     } else if (code == "2") {
       products.forEach((element) {
         element.read();
       });
+    } else if (code == "3") {
+      rows.add(Storage(counter, products));
+      products = [];
+      counter++;
     }
   } while (flag);
+  for (int i = 1; i < counter; i++) {
+    print("Customer #$i items are:\n");
+    rows[i - 1].products.forEach((element) {
+      element.read();
+    });
+  }
 }
