@@ -9,13 +9,7 @@ class Item {
   Item(this.id, this.desc, this.price, this.quantity, this.discount);
 
   void read() {
-    print("\n====================================");
-    print("Product ID: ${this.id}");
-    print("Product description: ${this.desc}");
-    print("Product price: ${this.price}");
-    print("Product quantity: ${this.quantity}");
-    print("Product discount: ${this.discount}%");
-    print("====================================\n");
+    print("\n${this.id}\t${this.desc}\t\t\t${this.price}\t\t\t${this.quantity}\t\t\t${this.discount}");
   }
 }
 
@@ -82,9 +76,12 @@ void main() {
       products.add(Item(id, desc, price, quantity, discount));
       print("Item added!\n");
     } else if (code == "2") {
+      print("\n======================================PRODUCT DISPLAY======================================");
+      print("===========================================================================================");
+      print("ID\tDESCRIPTION\t\tPRICE(RM)\t\tQUANTITY\t\tDISCOUNT(%)");
       products.forEach((element) {
-        element.read();
-      });
+        element.read();});
+      print("===========================================================================================\n");
       // Amirul
     } else if (code == "3") {
       products.forEach((element) {
@@ -97,6 +94,7 @@ void main() {
       id = int.parse(checkValue(id, "Item id: ", 1));
       products.removeWhere((item) => item.id == id);
       print("\nItem Removed!");
+
     } else if (code == "4") {
       rows.add(Storage(counter, products));
       products = [];
