@@ -3,9 +3,39 @@ import 'dart:io';
 class Item {
   int id;
   String desc;
-  int price;
+  double price;
   int quantity;
   Item(this.id, this.desc, this.price, this.quantity);
+
+  void read() {
+    print("\n====================================");
+    print("Product ID: ${this.id}");
+    print("Product description: ${this.desc}");
+    print("Product price: ${this.price}");
+    print("Product quantity: ${this.quantity}");
+    print("====================================\n");
+  }
+}
+
+String checkValue(var property, String prompt, int code) {
+  bool checkFlag = true;
+  do {
+    try {
+      checkFlag = true;
+      stdout.write(prompt);
+      property = stdin.readLineSync()!;
+      if (code == 1 || code == 4) //id or price
+        property = int.parse(property);
+      else if (code == 2) //desc
+        ;
+      else if (code == 3) //price
+        property = double.parse(double.parse(property).toStringAsFixed(2));
+    } catch (e) {
+      print("\nError! Please input the correct value!");
+      checkFlag = false;
+    }
+  } while (!checkFlag);
+  return property.toString();
 }
 
 void main() {
@@ -13,34 +43,35 @@ void main() {
   var code;
   bool flag = true;
   do {
-    print("What do you want to do?\n");
+    print("\nWhat do you want to do?\n");
     print("Press 0 to exit");
     print("Press 1 to add.");
+    print("Press 2 to display all items");
     code = stdin.readLineSync();
-    print("code is: $code");
 
-    if (code == 0) flag = false;
-
-    if (code == 1) {
-      print("Add item function...");
+    if (code == "0") {
+      String confirm = '';
+      stdout.write("\nAre you sure you want to exit? (y/n): ");
+      confirm = stdin.readLineSync()!;
+      if (confirm == 'y') flag = false;
+    } else if (code == "1") {
+      print("Insert item function...");
 
       var id, price, quantity;
       var desc;
 
-      print("Item id:");
-      id = stdin.readLineSync();
-
-      print("Item desc/name:");
-      desc = stdin.readLineSync();
-
-      print("Item price:");
-      price = stdin.readLineSync();
-
-      print("Item quantity:");
-      quantity = stdin.readLineSync();
+      id = int.parse(checkValue(id, "Item id: ", 1));
+      desc = checkValue(desc, "Item desc/name: ", 2);
+      price = double.parse(checkValue(price, "Item price: ", 3));
+      quantity =
+          int.parse(checkValue(quantity, "Item quantity: ", 4));
 
       products.add(Item(id, desc, price, quantity));
       print("Item added!\n");
+    } else if (code == "2") {
+      products.forEach((element) {
+        element.read();
+      });
     }
   } while (flag);
 }
