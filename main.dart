@@ -1,3 +1,4 @@
+// import 'dart:html';
 import 'dart:io';
 
 class Item {
@@ -35,15 +36,22 @@ String checkValue(var property, String prompt, int code) {
   return property.toString();
 }
 
-class Storage {
+class Cart {
   late int id;
+  late String desc;
+  late double price;
+  late int quantity;
+  late int discount; 
+
   List<Item> products = [];
-  Storage(this.id, this.products);
+  Cart(this.id, this.desc, this.price, this.quantity, this.discount);
 }
 
 void main() {
   var menu;
   bool mainmenu = true;
+  late List<Item> products = [];
+  late List<Cart> cart = [];
 
   do {
     print("\n\n\t|============ POS Prototype ============|");
@@ -51,7 +59,7 @@ void main() {
         "\n\n\t\tPress 1 for Admin menu\n\n\t\tPress 2 for Customer menu\n\n\t\tPress 3 to exit system");
     print("\n\n\t|=======================================|");
     menu = stdin.readLineSync();
-    late List<Item> products = [];
+    
     // late List<Storage> rows = [];
 
     if (menu == "1") {
@@ -150,6 +158,21 @@ void main() {
           flag = false;
         } else if (shop == '1') {
 
+          print("Add Item to cart");
+
+           print(
+              "\n======================================PRODUCT DISPLAY======================================");
+          print(
+              "===========================================================================================");
+          print("ID\tDESCRIPTION\t\tPRICE(RM)\t\tQUANTITY\t\tDISCOUNT(%)");
+          products.forEach((element) {
+            element.read();
+          });
+          print(
+              "===========================================================================================\n");
+
+          addCart(products, cart);
+
         } else if (shop == '3') {
 
         } else if (shop == '4') {
@@ -161,3 +184,31 @@ void main() {
     }
   } while (mainmenu);
 }
+
+  void addCart (List<Item> products , List<Cart> cart){
+
+    var id, desc, price, quan, disc;
+
+    stdout.write("Enter the item ID: ");
+    int input = int.parse(stdin.readLineSync()!);
+    stdout.write("Enter quantity: ");
+    quan = int.parse(stdin.readLineSync()!);
+
+    var exist = false;
+    products.forEach((Item item) {
+      if (item.id == input) {
+        id = item.id;
+        desc = item.desc;
+        price = item.price;
+        disc = item.discount;
+        exist = true;
+      }
+    });
+      if (exist) {
+      cart.add(Cart(id, desc, price, quan, disc));
+    } else {
+      print('Your Item Id was invalid');
+      return;
+    }
+  }
+
