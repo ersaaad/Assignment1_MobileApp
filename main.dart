@@ -9,7 +9,8 @@ class Item {
   Item(this.id, this.desc, this.price, this.quantity, this.discount);
 
   void read() {
-    print("\n${this.id}\t${this.desc}\t\t\t${this.price}\t\t\t${this.quantity}\t\t\t${this.discount}");
+    print(
+        "\n${this.id}\t${this.desc}\t\t\t${this.price}\t\t\t${this.quantity}\t\t\t${this.discount}");
   }
 }
 
@@ -41,73 +42,115 @@ class Storage {
 }
 
 void main() {
-  late List<Item> products = [];
-  late List<Storage> rows = [];
-  var code;
-  int counter = 1;
-  bool flag = true;
+  var menu;
+  bool mainmenu = true;
+
   do {
-    print("\nWelcome, Customer #$counter!");
-    print("What do you want to do?\n");
-    print("Press 0 to exit this menu.");
-    print("Press 1 to add.");
-    print("Press 2 to display all items.");
-    print("Press 3 to remove items.");
-    print("Press 4 if you are done.");
-    code = stdin.readLineSync();
+    print("\n\n\t|============ POS Prototype ============|");
+    print(
+        "\n\n\t\tPress 1 for Admin menu\n\n\t\tPress 2 for Customer menu\n\n\t\tPress 3 to exit system");
+    print("\n\n\t|=======================================|");
+    menu = stdin.readLineSync();
+    late List<Item> products = [];
+    // late List<Storage> rows = [];
 
-    if (code == "0") {
-      String confirm = '';
-      stdout.write("\nAre you sure you want to exit? (y/n): ");
-      confirm = stdin.readLineSync()!;
-      if (confirm == 'y') flag = false;
-    } else if (code == "1") {
-      print("Insert item function...");
+    if (menu == "1") {
+      var code;
+      bool flag = true;
+      do {
+        print("What do you want to do?\n");
+        print("Press 0 to exit this menu.");
+        print("Press 1 to add item.");
+        print("Press 2 to display all items.");
+        print("Press 3 to remove items.");
+        // print("Press 4 if you are done.");
+        code = stdin.readLineSync();
 
-      var id, price, quantity, desc, discount;
+        if (code == "0") {
+          // String confirm = '';
+          // stdout.write("\nAre you sure you want to exit? (y/n): ");
+          // confirm = stdin.readLineSync()!;
+          // if (confirm == 'y') 
+          flag = false;
+        } else if (code == "1") {
+          print("Insert item function...");
 
-      id = int.parse(checkValue(id, "Item id: ", 1));
-      desc = checkValue(desc, "Item desc/name: ", 2);
-      price = double.parse(checkValue(price, "Item price: ", 3));
-      quantity = int.parse(checkValue(quantity, "Item quantity: ", 4));
-      discount =
-          int.parse(checkValue(discount, "Item discount in percentage(%):", 5));
+          var id, price, quantity, desc, discount;
 
-      products.add(Item(id, desc, price, quantity, discount));
-      print("Item added!\n");
-    } else if (code == "2") {
-      print("\n======================================PRODUCT DISPLAY======================================");
-      print("===========================================================================================");
-      print("ID\tDESCRIPTION\t\tPRICE(RM)\t\tQUANTITY\t\tDISCOUNT(%)");
-      products.forEach((element) {
-        element.read();});
-      print("===========================================================================================\n");
-      // Amirul
-    } else if (code == "3") {
-      products.forEach((element) {
-        element.read();
-      });
+          id = int.parse(checkValue(id, "Item id: ", 1));
+          desc = checkValue(desc, "Item desc/name: ", 2);
+          price = double.parse(checkValue(price, "Item price: ", 3));
+          quantity = int.parse(checkValue(quantity, "Item quantity: ", 4));
+          discount = int.parse(
+              checkValue(discount, "Item discount in percentage(%):", 5));
 
-      print("\nInput Id of item that you want to remove...\n");
-      var id;
+          products.add(Item(id, desc, price, quantity, discount));
+          print("Item added!\n");
+        } else if (code == "2") {
+          print(
+              "\n======================================PRODUCT DISPLAY======================================");
+          print(
+              "===========================================================================================");
+          print("ID\tDESCRIPTION\t\tPRICE(RM)\t\tQUANTITY\t\tDISCOUNT(%)");
+          products.forEach((element) {
+            element.read();
+          });
+          print(
+              "===========================================================================================\n");
+          // Amirul
+        } else if (code == "3") {
+          products.forEach((element) {
+            element.read();
+          });
 
-      id = int.parse(checkValue(id, "Item id: ", 1));
-      products.removeWhere((item) => item.id == id);
-      print("\nItem Removed!");
+          print("\nInput Id of item that you want to remove...\n");
+          var id;
 
-    } else if (code == "4") {
-      rows.add(Storage(counter, products));
-      products = [];
-      counter++;
-      print("====================\n");
-      print("Next customer!");
+          id = int.parse(checkValue(id, "Item id: ", 1));
+          products.removeWhere((item) => item.id == id);
+          print("\nItem Removed!");
+        }
+        // } else if (code == "4") {
+        //   rows.add(Storage(counter, products));
+        //   products = [];
+        //   counter++;
+        //   print("====================\n");
+        //   print("Next customer!");
+        // }
+      } while (flag);
+
+      // for (int i = 1; i < counter; i++) {
+      //   print("Customer #$i items are:\n");
+      //   rows[i - 1].products.forEach((element) {
+      //     element.read();
+      //   });
+      // }
+    } else if (menu == "2") {
+      // int counter = 1;
+      var shop;
+      bool flag = true;
+
+      do {
+        print("\nWelcome, to our Store!");
+        print("Press 0 to exit this menu.");
+        print("Press 1 to add item to cart.");
+        print("Press 2 to display cart.");
+        print("Press 3 to remove items from cart.");
+        print("Press 4 to proceed to checkout.");
+        shop = stdin.readLineSync();
+
+        if (shop == '0') {
+          flag = false;
+        } else if (shop == '1') {
+          
+        } else if (shop == '3') {
+
+        } else if (shop == '4') {
+
+        }
+      } while (flag);
+    } else if (menu == "3") {
+      mainmenu = false;
     }
-    ;
-  } while (flag);
-  for (int i = 1; i < counter; i++) {
-    print("Customer #$i items are:\n");
-    rows[i - 1].products.forEach((element) {
-      element.read();
-    });
-  }
+  } while (mainmenu);
 }
