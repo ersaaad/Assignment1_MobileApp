@@ -99,16 +99,23 @@ void main() {
               "===========================================================================================\n");
           // Amirul
         } else if (code == "3") {
+          print(
+              "\n======================================PRODUCT DISPLAY======================================");
+          print(
+              "===========================================================================================");
+          print("ID\tDESCRIPTION\t\tPRICE(RM)\t\tQUANTITY\t\tDISCOUNT(%)");
           products.forEach((element) {
             element.read();
           });
+          print(
+              "===========================================================================================\n");
 
           print("\nInput Id of item that you want to remove...\n");
           var id;
 
           id = int.parse(checkValue(id, "Item id: ", 1));
           products.removeWhere((item) => item.id == id);
-          print("\nItem Removed!");
+          print("\nItem Removed!\n\n");
         }
         // } else if (code == "4") {
         //   rows.add(Storage(counter, products));
@@ -142,7 +149,7 @@ void main() {
         if (shop == '0') {
           flag = false;
         } else if (shop == '1') {
-          
+
         } else if (shop == '3') {
 
         } else if (shop == '4') {
